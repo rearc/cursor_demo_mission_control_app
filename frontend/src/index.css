@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Bricolage Grotesque", ui-serif, Georgia, serif;
+
+  --color-surface: #0f1219;
+  --color-surface-raised: #181d27;
+  --color-surface-hover: #1e2433;
+  --color-border-subtle: #252d3d;
+
+  --color-text-primary: #e8ecf4;
+  --color-text-secondary: #8893a7;
+  --color-text-muted: #4d5768;
+
+  --color-card-weather: #f59e0b;
+  --color-card-quote: #f472b6;
+  --color-card-space: #22d3ee;
+  --color-card-placeholder: #818cf8;
+}
+
+body {
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+  font-family: var(--font-display);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Staggered card entrance — opacity only to avoid conflicting with
+   react-grid-layout's inline transform */
+@keyframes card-enter {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-card-enter {
+  animation: card-enter 0.4s ease-out both;
+}
+
+/* Loading pulse */
+@keyframes subtle-pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+.animate-subtle-pulse {
+  animation: subtle-pulse 1.5s ease-in-out infinite;
+}
+
+/* react-grid-layout overrides */
+.react-grid-item {
+  transition: all 200ms ease !important;
+}
+
+.react-grid-item > div {
+  height: 100%;
+}
+
+.react-grid-placeholder {
+  background: var(--color-card-placeholder) !important;
+  opacity: 0.08 !important;
+  border: 1px solid var(--color-card-placeholder) !important;
+  border-radius: 0 !important;
+}
+
+.react-resizable-handle::after {
+  border-color: var(--color-text-muted) !important;
+}
