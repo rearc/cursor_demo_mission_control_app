@@ -1,0 +1,8 @@
+# Environment
+.env
+
+# OS
+.DS_Store
+
+# Irrelevant Context
+BOOTSTRAP_PROMPT.md

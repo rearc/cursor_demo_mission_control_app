@@ -1,0 +1,53 @@
+---
+description: "Enforces consistent JSON envelope format and HTTP status codes for all Flask API routes."
+alwaysApply: true
+---
+
+# Flask API Conventions
+
+All Flask API endpoints must return a consistent JSON envelope and use correct HTTP status codes.
+
+## Response Envelope
+
+Every response must use this structure:
+
+```python
+{"data": <payload or null>, "error": <error string or null>}
+```
+
+- On success: `data` contains the result, `error` is `null`.
+- On failure: `data` is `null`, `error` contains a human-readable message.
+
+## Status Codes
+
+| Scenario | Code |
+|----------|------|
+| Success (with body) | 200 |
+| Resource created | 201 |
+| No content (delete) | 204 |
+| Bad request / validation error | 400 |
+| Unauthorized | 401 |
+| Forbidden | 403 |
+| Not found | 404 |
+| Server error | 500 |
+
+## Examples
+
+```python
+# GOOD
+@app.route("/api/widgets", methods=["GET"])
+def list_widgets():
+    widgets = Widget.query.all()
+    return jsonify({"data": [w.to_dict() for w in widgets], "error": None}), 200
+
+# GOOD — error case
+@app.route("/api/widgets/<int:widget_id>")
+def get_widget(widget_id):
+    widget = Widget.query.get(widget_id)
+    if not widget:
+        return jsonify({"data": None, "error": "Widget not found"}), 404
+    return jsonify({"data": widget.to_dict(), "error": None}), 200
+
+# BAD — no envelope, bare list
+return jsonify([w.to_dict() for w in widgets])
+```

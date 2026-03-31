@@ -56,6 +56,21 @@ cp .env.example .env
 
 Weather data uses Open-Meteo (no key required). All cards render with graceful fallbacks when APIs are unreachable.
 
+## MCP Servers
+
+### Coin Flip
+
+A minimal [FastMCP](https://github.com/modelcontextprotocol/python-sdk) server that exposes a `flip_coin` tool. To set it up:
+
+```bash
+cd mcp-servers/coin-flip
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+The server is configured in `.cursor/mcp.json` and Cursor will launch it automatically via stdio.
+
 ## Project Structure
 
 ```

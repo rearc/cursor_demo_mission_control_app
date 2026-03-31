@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "coin-flip": {
+      "command": "python",
+      "args": ["mcp-servers/coin-flip/server.py"],
+      "type": "stdio"
+    },
+    "context7": {
+      "url": "https://mcp.context7.com/mcp",
+      "type": "streamable-http"
+    }
+  }
+}
