@@ -4,12 +4,14 @@ import WeatherCard from './cards/WeatherCard'
 import QuoteCard from './cards/QuoteCard'
 import SpaceCard from './cards/SpaceCard'
 import PlaceholderCard from './cards/PlaceholderCard'
+import TodoCard from './cards/TodoCard'
 
 const CARD_REGISTRY = {
   weather:     { component: WeatherCard,     accent: 'card-weather',     needsData: true },
   quote:       { component: QuoteCard,       accent: 'card-quote',       needsData: true },
   space:       { component: SpaceCard,       accent: 'card-space',       needsData: true },
   placeholder: { component: PlaceholderCard, accent: 'card-placeholder', needsData: false },
+  todo:        { component: TodoCard,        accent: 'card-todo',        needsData: false },
 }
 
 export default function Card({ card, locked }) {

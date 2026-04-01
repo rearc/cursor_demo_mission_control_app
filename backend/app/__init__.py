@@ -17,8 +17,10 @@ def create_app():
 
     from app.routes.cards import cards_bp
     from app.routes.data import data_bp
+    from app.routes.todos import todos_bp
 
     app.register_blueprint(cards_bp, url_prefix='/api')
     app.register_blueprint(data_bp, url_prefix='/api')
+    app.register_blueprint(todos_bp, url_prefix='/api')
 
     return app

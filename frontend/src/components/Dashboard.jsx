@@ -76,7 +76,7 @@ export default function Dashboard() {
         <p className="text-text-secondary text-lg">Unable to load dashboard</p>
         <p className="text-text-muted text-sm mt-2">{error}</p>
         <p className="text-text-muted text-sm mt-1">
-          Make sure the backend is running on port 5000
+          Make sure the backend is running on port 5001
         </p>
       </div>
     )
