@@ -1,10 +1,12 @@
 from app import create_app, db
 from app.models.card import Card
+from app.models.todo import Todo
 
 
 def seed():
     app = create_app()
     with app.app_context():
+        Todo.query.delete()
         Card.query.delete()
 
         cards = [
@@ -52,10 +54,29 @@ def seed():
                 position=4,
                 is_active=True,
             ),
+            Card(
+                slug='todo',
+                title='Todos',
+                description='Simple list for this dashboard',
+                icon='✅',
+                source='todo',
+                config={},
+                layout={'x': 0, 'y': 10, 'w': 12, 'h': 4},
+                position=5,
+                is_active=True,
+            ),
         ]
 
         db.session.add_all(cards)
         db.session.commit()
+
+        todo_card = Card.query.filter_by(slug='todo').first()
+        if todo_card:
+            db.session.add(
+                Todo(card_id=todo_card.id, text='Try checking this off', done=False)
+            )
+            db.session.commit()
+
         print(f'Seeded {len(cards)} cards.')
 
 

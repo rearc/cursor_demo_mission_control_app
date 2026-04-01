@@ -5,7 +5,7 @@ import 'react-resizable/css/styles.css'
 import { fetchCards, updateCard } from '../api'
 import Card from './Card'
 
-function buildLayout(cards) {
+function buildLayout(cards, locked) {
   return cards.map((card, i) => ({
     i: String(card.id),
     x: card.layout?.x ?? (i % 2) * 6,
@@ -14,6 +14,7 @@ function buildLayout(cards) {
     h: card.layout?.h ?? 4,
     minW: 3,
     minH: 3,
+    static: locked,
   }))
 }
 
@@ -75,13 +76,13 @@ export default function Dashboard() {
         <p className="text-text-secondary text-lg">Unable to load dashboard</p>
         <p className="text-text-muted text-sm mt-2">{error}</p>
         <p className="text-text-muted text-sm mt-1">
-          Make sure the backend is running on port 5000
+          Make sure the backend is running on port 5001
         </p>
       </div>
     )
   }
 
-  const layout = buildLayout(cards)
+  const layout = buildLayout(cards, locked)
 
   return (
     <div>

@@ -67,4 +67,4 @@ def delete_card(card_id):
     card = db.get_or_404(Card, card_id)
     db.session.delete(card)
     db.session.commit()
-    return jsonify({'message': f'Card "{card.slug}" deleted'})
+    return '', 204
