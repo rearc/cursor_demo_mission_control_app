@@ -1,22 +1,20 @@
 ---
-description: "Enforces consistent JSON envelope format and HTTP status codes for all Flask API routes."
+description: "Enforces consistent response format and HTTP status codes for all Flask API routes, following Flask's own conventions."
 alwaysApply: true
 ---
 
 # Flask API Conventions
 
-All Flask API endpoints must return a consistent JSON envelope and use correct HTTP status codes.
+All Flask API endpoints must use consistent response shapes and correct HTTP status codes, following Flask's documented patterns.
 
-## Response Envelope
+## Response Format
 
-Every response must use this structure:
+Return data directly — no wrapper envelope. Rely on HTTP status codes to indicate success or failure.
 
-```python
-{"data": <payload or null>, "error": <error string or null>}
-```
-
-- On success: `data` contains the result, `error` is `null`.
-- On failure: `data` is `null`, `error` contains a human-readable message.
+- **Single resource:** return the object directly via `jsonify(obj.to_dict())`
+- **Collection:** return a bare list via `jsonify([obj.to_dict() for obj in items])`
+- **Error:** return `{"error": "<message>"}` with the appropriate status code
+- **Delete:** return an empty body with 204
 
 ## Status Codes
 
@@ -29,25 +27,46 @@ Every response must use this structure:
 | Unauthorized | 401 |
 | Forbidden | 403 |
 | Not found | 404 |
+| Conflict (duplicate) | 409 |
 | Server error | 500 |
 
 ## Examples
 
 ```python
-# GOOD
-@app.route("/api/widgets", methods=["GET"])
-def list_widgets():
-    widgets = Widget.query.all()
-    return jsonify({"data": [w.to_dict() for w in widgets], "error": None}), 200
-
-# GOOD — error case
+# Single resource
 @app.route("/api/widgets/<int:widget_id>")
 def get_widget(widget_id):
-    widget = Widget.query.get(widget_id)
-    if not widget:
-        return jsonify({"data": None, "error": "Widget not found"}), 404
-    return jsonify({"data": widget.to_dict(), "error": None}), 200
+    widget = db.get_or_404(Widget, widget_id)
+    return jsonify(widget.to_dict())
 
-# BAD — no envelope, bare list
-return jsonify([w.to_dict() for w in widgets])
+# Collection
+@app.route("/api/widgets")
+def list_widgets():
+    widgets = Widget.query.all()
+    return jsonify([w.to_dict() for w in widgets])
+
+# Create
+@app.route("/api/widgets", methods=["POST"])
+def create_widget():
+    data = request.get_json()
+    if not data:
+        return jsonify({"error": "Request body is required"}), 400
+    widget = Widget(**data)
+    db.session.add(widget)
+    db.session.commit()
+    return jsonify(widget.to_dict()), 201
+
+# Delete
+@app.route("/api/widgets/<int:widget_id>", methods=["DELETE"])
+def delete_widget(widget_id):
+    widget = db.get_or_404(Widget, widget_id)
+    db.session.delete(widget)
+    db.session.commit()
+    return "", 204
+
+# BAD — wrapper envelope, don't do this
+return jsonify({"data": widget.to_dict(), "error": None})
+
+# BAD — returning a body on delete
+return jsonify({"message": "Deleted"}), 200
 ```
