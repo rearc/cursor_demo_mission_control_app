@@ -8,13 +8,26 @@ A widget dashboard with a React frontend and Flask API backend. Displays data ca
 - Node.js 18+
 - npm 9+
 
+## Environment Variables
+
+Copy `.env.example` to `.env` in the project root:
+
+```bash
+cp .env.example .env
+```
+
+- **FLASK_SECRET_KEY** — Required. Set to any secret string.
+- **NASA_API_KEY** — Optional. Free at [api.nasa.gov](https://api.nasa.gov/) (works without a key using DEMO_KEY, but with stricter rate limits)
+
+Weather data uses Open-Meteo (no key required). All cards render with graceful fallbacks when APIs are unreachable.
+
 ## Setup
 
 ### Backend
 
 ```bash
 cd backend
-python3.13 -m venv venv
+python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 ```
@@ -32,7 +45,7 @@ Start the dev server:
 python run.py
 ```
 
-The API runs at `http://127.0.0.1:5000`.
+The API runs at `http://127.0.0.1:5001`.
 
 ### Frontend
 
@@ -43,18 +56,6 @@ npm run dev
 ```
 
 The app runs at `http://localhost:5173` and proxies API requests to the Flask backend.
-
-## API Keys (Optional)
-
-Copy `.env.example` to `.env` in the project root and add your keys:
-
-```bash
-cp .env.example .env
-```
-
-- **NASA_API_KEY** — Free at [api.nasa.gov](https://api.nasa.gov/) (works without a key using DEMO_KEY, but with stricter rate limits)
-
-Weather data uses Open-Meteo (no key required). All cards render with graceful fallbacks when APIs are unreachable.
 
 ## MCP Servers
 
