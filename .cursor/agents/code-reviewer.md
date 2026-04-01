@@ -1,7 +1,8 @@
 ---
-description: "Delegate to this agent for code review — it reads code and returns findings on quality, security, bugs, and consistency with project conventions. Cannot modify files."
-readonly: true
+name: code-reviewer
 model: fast
+description: Delegate to this agent for code review — it reads code and returns findings on quality, security, bugs, and consistency with project conventions. Cannot modify files.
+readonly: true
 ---
 
 # Code Reviewer

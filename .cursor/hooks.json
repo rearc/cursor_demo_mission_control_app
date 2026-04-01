@@ -70,11 +70,11 @@
       }
     ],
     "stop": [
-      {
-        "type": "prompt",
-        "prompt": "The agent just finished its task. Review what it did and produce a brief summary. Check: (1) Did it leave any TODO or FIXME comments that suggest incomplete work? (2) Did it modify files outside the directories implied by the original request? (3) Did it install new dependencies — if so, flag them for the user to review. Provide your summary as a short bulleted list of what changed and any concerns. This is informational only — always ALLOW.",
-        "timeout": 15
-      },
+      // {
+      //   "type": "prompt",
+      //   "prompt": "The agent just finished its task. Review what it did and produce a brief summary. Check: (1) Did it leave any TODO or FIXME comments that suggest incomplete work? (2) Did it modify files outside the directories implied by the original request? (3) Did it install new dependencies — if so, flag them for the user to review. Provide your summary as a short bulleted list of what changed and any concerns. This is informational only — always ALLOW.",
+      //   "timeout": 15
+      // },
       {
         "command": "./scripts/audit.sh"
       }

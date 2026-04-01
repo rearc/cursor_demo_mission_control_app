@@ -5,7 +5,7 @@ mcp = FastMCP("coin-flip")
 
 
 @mcp.tool()
-def flip_coin() -> str:
+def coin_flip_mcp() -> str:
     """Flip a coin and return 'heads' or 'tails'."""
     return random.choice(["heads", "tails"])
 
