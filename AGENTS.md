@@ -102,6 +102,26 @@ npm run dev
 - **Secrets:** Never paste `.env` contents into chat or commit them; use `.env.example` for documenting new keys.
 - **Documentation:** If you change ports, proxy targets, or env vars, update `README.md` in the same change when practical.
 
+## MCP servers
+
+This repo connects to external services via the Model Context Protocol. MCP configs live in two places:
+
+- **`.mcp.json`** (repo root) -- read by Claude Code. Contains the ClickUp MCP server.
+- **`.cursor/mcp.json`** -- read by Cursor. Contains the ClickUp MCP server, Context7 (documentation lookup), and a project-local coin-flip demo server.
+
+### ClickUp (project management)
+
+- **Endpoint:** `https://mcp.clickup.com/mcp`
+- **Auth:** OAuth 2.1 (run `/mcp` in Claude Code or authenticate via Cursor's MCP panel on first use)
+- **What it provides:** Read and write access to the ClickUp workspace -- tasks, lists, comments, statuses, custom fields. The agent can read tickets, create stories, post comments, and update task status.
+- **When to use:** When a task references a ClickUp ticket, when decomposing Epics into stories, when checking tickets against `docs/standards/definition_of_ready.md`, or when pushing dev-side refinements back to ClickUp.
+
+### Team standards documents
+
+The `docs/standards/` directory contains team policy documents that AI agents reference during workflows:
+
+- **`docs/standards/definition_of_ready.md`** -- The team's Definition of Ready checklist. Agents read this file when evaluating whether a ClickUp ticket is ready for development. See the file's "How this document is used" section for details.
+
 ## Known inconsistencies
 
 - **`README.md`** says the API runs on port **5000**, but **`backend/run.py`** and **`frontend/vite.config.js`** use **5001**. Trust those files and the [Ports and proxy](#local-development) section here.

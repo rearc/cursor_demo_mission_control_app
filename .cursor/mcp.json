@@ -8,6 +8,10 @@
     "context7": {
       "url": "https://mcp.context7.com/mcp",
       "type": "streamable-http"
+    },
+    "clickup": {
+      "url": "https://mcp.clickup.com/mcp",
+      "type": "streamable-http"
     }
   }
 }
