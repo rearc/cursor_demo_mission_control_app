@@ -19,6 +19,24 @@
   --color-card-todo: #10b981;
 }
 
+.light {
+  --color-surface: #f3f6fb;
+  --color-surface-raised: #ffffff;
+  --color-surface-hover: #edf2fa;
+  --color-border-subtle: #d6deea;
+
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #41506a;
+  --color-text-muted: #5a677d;
+
+  /* Slightly deeper accents preserve contrast on light surfaces. */
+  --color-card-weather: #b45309;
+  --color-card-quote: #be185d;
+  --color-card-space: #0e7490;
+  --color-card-placeholder: #4f46e5;
+  --color-card-todo: #047857;
+}
+
 body {
   background: var(--color-surface);
   color: var(--color-text-primary);
