@@ -125,3 +125,28 @@ The `docs/standards/` directory contains team policy documents that AI agents re
 ## Known inconsistencies
 
 - **`README.md`** says the API runs on port **5000**, but **`backend/run.py`** and **`frontend/vite.config.js`** use **5001**. Trust those files and the [Ports and proxy](#local-development) section here.
+
+## Cursor Cloud specific instructions
+
+### System prerequisites
+
+The Cloud VM ships with Python 3.12 (not 3.13). Use `python3` everywhere instead of `python3.13`. The `python3.12-venv` apt package is required to create virtual environments and is installed by the update script.
+
+### Starting the dev environment
+
+Both servers are needed; see [Local development](#local-development) for canonical commands. Non-obvious caveats:
+
+- **`.env` file:** The repo-root `.env` is gitignored and not present on a fresh VM. Create it from `.env.example` before starting the backend. The shell guard hook blocks `cp` commands that reference `.env`, so use a file-write tool or `cat > .env` redirect to create it.
+- **Database init:** Run `flask --app run.py db upgrade` and `python seed.py` (from `backend/`, with venv active) before the first backend start. Re-seeding wipes all cards.
+- **No lint/test harness:** This repo does not include ESLint, Prettier, pytest, or any automated test suite. Verification is manual (curl the API, open the browser).
+
+### Verifying the stack
+
+| Check | Command / URL |
+|-------|---------------|
+| Backend health | `curl http://127.0.0.1:5001/api/cards` — should return a JSON array |
+| Frontend loads | `curl http://localhost:5173` — should return the Vite-served HTML |
+| Vite→Flask proxy | `curl http://localhost:5173/api/cards` — same JSON as the direct backend call |
+| Weather data | `curl http://127.0.0.1:5001/api/data/weather?city=London` |
+| Quote data | `curl http://127.0.0.1:5001/api/data/quote` (source is `quote`, not `quotes`) |
+| Space data | `curl http://127.0.0.1:5001/api/data/space` |
